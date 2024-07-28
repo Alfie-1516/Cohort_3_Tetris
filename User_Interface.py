@@ -2,6 +2,8 @@
 import sys
 import pygame
 from Grid_Class import Grid
+from Diff_Blocks import *
+from Game_Class import Game
 
 pygame.init()
 dark_blue = (44, 44, 127)
@@ -12,15 +14,29 @@ pygame.display.set_caption("Cohort 3 Tetris")
 clock = pygame.time.Clock()
 
 game_grid = Grid()
-
+game = Game()
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if game.game_over == True:
+                game.game_over = False
+                game.reset()
+            if event.key == pygame.K_LEFT:
+                game.move_left()
+            if event.key == pygame.K_RIGHT:
+                game.move_right()
+            if event.key == pygame.K_DOWN:
+                game.move_down()
+                game.update_score(0, 1)
+            if event.key == pygame.K_UP:
+                game.rotate()
 
     screen.fill(dark_blue)
     game_grid.draw(screen)
+    block.draw(screen)
     pygame.display.update()
     clock.tick(60)
