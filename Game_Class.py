@@ -9,14 +9,14 @@ class Game:
     def __init__(self):
         # Initialize the game grid and blocks
         self.grid = Grid()
-        self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
+        self.blocks = [IBlock(), JBlock(),LBlock(),  OBlock(), SBlock(), TBlock(), ZBlock()]
         self.current_block = self.get_random_block()
         self.next_block = self.get_random_block()
 
     # Get a random block from the list of blocks
     def get_random_block(self):
         if len(self.blocks) == 0:
-            self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
+            self.blocks = [IBlock(), JBlock(),LBlock(),  OBlock(), SBlock(), TBlock(), ZBlock()]
         block = random.choice(self.blocks)
         self.blocks.remove(block)
         return block
@@ -31,6 +31,7 @@ class Game:
     # Move the current block right by one column
     def move_right(self):
         self.current_block.move(0, 1)
+        print(self.current_block)
         # Check if the block is still inside the grid; if not, move it back
         if not self.block_inside():
             self.current_block.move(0, -1)
