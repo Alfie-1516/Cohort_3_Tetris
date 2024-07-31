@@ -1,8 +1,6 @@
 """This code sets up a Tetris game using Pygame, initializing necessary modules, fonts, and display elements."""
 import sys
 import pygame
-from Grid_Class import Grid
-from Diff_Blocks import *
 from Game_Class import Game
 
 pygame.init()
@@ -13,7 +11,6 @@ pygame.display.set_caption("Cohort 3 Tetris")
 
 clock = pygame.time.Clock()
 
-game_grid = Grid()
 game = Game()
 
 while True:
@@ -36,7 +33,6 @@ while True:
                 game.rotate()
 
     screen.fill(dark_blue)
-    game_grid.draw(screen)
-    block.draw(screen)
+    game.draw(screen)
     pygame.display.update()
     clock.tick(60)

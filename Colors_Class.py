@@ -3,7 +3,7 @@ list of specific cell colors."""
 
 
 # A function to create the different colors of the blocks in the grid
-class Colors_Class:
+class Colors:
     dark_gray = (26, 31, 40)  # This color represents the empty cell
     green = (47, 230, 23)
     red = (232, 18, 18)
