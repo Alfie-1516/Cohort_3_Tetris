@@ -1,8 +1,6 @@
 """This code sets up a Tetris game using Pygame, initializing necessary modules, fonts, and display elements."""
 import sys
 import pygame
-from Grid_Class import Grid
-from Diff_Blocks import *
 from Game_Class import Game
 
 pygame.init()

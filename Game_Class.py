@@ -31,7 +31,6 @@ class Game:
     # Move the current block right by one column
     def move_right(self):
         self.current_block.move(0, 1)
-        print(self.current_block)
         # Check if the block is still inside the grid; if not, move it back
         if not self.block_inside():
             self.current_block.move(0, -1)
@@ -54,7 +53,7 @@ class Game:
     def block_inside(self):
         tiles = self.current_block.get_cell_positions()
         for tile in tiles:
-            if not self.grid.is_inside(tile.row, tile.column) == False:
+            if self.grid.is_inside(tile.row, tile.column) == False:
                 return False
         return True
 
