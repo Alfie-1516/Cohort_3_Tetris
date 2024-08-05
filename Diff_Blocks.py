@@ -76,3 +76,4 @@ class ZBlock(Block):
         2: [Position(0, 0), Position(0, 1), Position(1, 0), Position(0, 1)],
         3: [Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1)]
       }
+      self.move(0,3)
