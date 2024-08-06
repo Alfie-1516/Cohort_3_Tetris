@@ -21,11 +21,11 @@ clock = pygame.time.Clock()
 
 game = Game()
 
-bg_image =  pygame.image.load("image-asset.png")
+# Load background image
+bg_image = pygame.image.load("image-asset.png").convert()
 
 GAME_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(GAME_UPDATE, 200)
-
 
 while True:
     for event in pygame.event.get():
@@ -48,16 +48,20 @@ while True:
         if event.type == GAME_UPDATE and game.game_over == False:
             game.move_down()
 
-    # Drawing the pygame canvas
+    # Draw background image
+    screen.blit(bg_image, (0, 0))
+
+    # Draw other elements on top of the background
     score_value_surface = title_font.render(str(game.score), True, Colors.white)
-    screen.fill(Colors.dark_blue)
-    screen.blit(score_surface, (365, 20, 50, 50))
-    screen.blit(next_surface, (375, 180, 50, 50))
-    if game.game_over == True:
-        screen.blit(game_over_surface, (320, 450, 50, 50))
+    screen.blit(score_surface, (365, 20))
+    screen.blit(next_surface, (375, 180))
+    if game.game_over:
+        screen.blit(game_over_surface, (320, 450))
     pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
-    screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery) )
+    screen.blit(score_value_surface,
+                score_value_surface.get_rect(centerx=score_rect.centerx, centery=score_rect.centery))
     pygame.draw.rect(screen, Colors.light_blue, next_rect, 0, 10)
     game.draw(screen)
+
     pygame.display.update()
     clock.tick(60)
