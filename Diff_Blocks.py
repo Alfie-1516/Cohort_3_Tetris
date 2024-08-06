@@ -1,5 +1,5 @@
 """This code defines various Tetris block classes (LBlock, JBlock, IBlock, OBlock, SBlock, TBlock, ZBlock),
-each inheriting from a base Block class."""
+each inheriting from a base Block clas."""
 
 from Position_Class import Position
 from Block_Class import Block
