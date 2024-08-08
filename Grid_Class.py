@@ -77,8 +77,6 @@ class Grid:
         for row in range(self.num_rows):
             for column in range(self.num_cols):
                 cell_value = self.grid[row][column]
-                # Define rectangle for each cell to draw
-                cell_rect = pygame.Rect(column * self.cell_size + 11, row * self.cell_size + 11,
-                                        self.cell_size - 1, self.cell_size - 1)
-                # Draw the cell with corresponding color
+                #changed offset to 200
+                cell_rect = pygame.Rect(column*self.cell_size + 200, row*self.cell_size + 11 , self.cell_size -1, self.cell_size -1)
                 pygame.draw.rect(screen, self.colors[cell_value], cell_rect)

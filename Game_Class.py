@@ -108,11 +108,12 @@ class Game:
     # Draw the game grid and the current block on the screen
     def draw(self, screen):
         self.grid.draw(screen)
-        self.current_block.draw(screen, 11, 11)
 
+        ###NOTE change offset to 200
+        self.current_block.draw(screen, 200, 11 )
         if self.next_block.id == 3:
-            self.next_block.draw(screen, 255, 290)
+            self.next_block.draw(screen, 445, 86)
         elif self.next_block.id == 4:
-            self.next_block.draw(screen, 255, 280)
+            self.next_block.draw(screen, 445, 76)
         else:
-            self.next_block.draw(screen, 270, 270)
+            self.next_block.draw(screen, 460, 66)

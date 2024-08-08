@@ -6,26 +6,35 @@ from Colors_Class import Colors
 
 pygame.init()
 
-title_font = pygame.font.Font(None, 40)
+title_font = pygame.font.Font(None, 30)
 score_surface = title_font.render("Score", True, Colors.white)
-next_surface = title_font.render("Next", True, Colors.white)
-game_over_surface = title_font.render("GAME OVER", True, Colors.white)
+high_surface = title_font.render("Highest Score", True, Colors.white)
+next_surface = title_font.render("Next Brick", True, Colors.white)
+controls_surface =  title_font.render("Controls", True, Colors.white)
+level_surface =  title_font.render("Level", True, Colors.white)
+game_over_surface = title_font.render("GAME OVER!!!", True, Colors.red)
 
-score_rect = pygame.Rect(320, 55, 170, 60)
-next_rect = pygame.Rect(320, 215, 170, 180)
 
-screen = pygame.display.set_mode((500, 620))
+
+score_rect = pygame.Rect(19, 5, 170, 80)
+high_score = pygame.Rect(19, 97, 170, 80)
+next_rect = pygame.Rect(510, 5, 170, 180)
+grid_rect = pygame.Rect(192, 5, 315, 610)
+controls_rect = pygame.Rect(510, 435, 170, 180)
+level_rect = pygame.Rect(19, 435, 170, 180)
+
+
+screen = pygame.display.set_mode((700, 620))
 pygame.display.set_caption("Tetris Game")
 
 clock = pygame.time.Clock()
 
 game = Game()
-
-# Load background image
 bg_image = pygame.image.load("image-asset.png").convert()
 
 GAME_UPDATE = pygame.USEREVENT
-pygame.time.set_timer(GAME_UPDATE, 200)
+pygame.time.set_timer(GAME_UPDATE, 300)
+
 
 while True:
     for event in pygame.event.get():
@@ -48,20 +57,35 @@ while True:
         if event.type == GAME_UPDATE and game.game_over == False:
             game.move_down()
 
-    # Draw background image
+    # Drawing the pygame canvas
+    score_value_surface = title_font.render(str(game.score), True, Colors.white)
+    screen.fill(Colors.dark_blue)
+
     screen.blit(bg_image, (0, 0))
 
-    # Draw other elements on top of the background
-    score_value_surface = title_font.render(str(game.score), True, Colors.white)
-    screen.blit(score_surface, (365, 20))
-    screen.blit(next_surface, (375, 180))
-    if game.game_over:
-        screen.blit(game_over_surface, (320, 450))
-    pygame.draw.rect(screen, Colors.light_blue, score_rect, 0, 10)
-    screen.blit(score_value_surface,
-                score_value_surface.get_rect(centerx=score_rect.centerx, centery=score_rect.centery))
-    pygame.draw.rect(screen, Colors.light_blue, next_rect, 0, 10)
-    game.draw(screen)
+    pygame.draw.rect(screen, Colors.dark_gray, score_rect)
+    pygame.draw.rect(screen, Colors.dark_gray, high_score)
+    pygame.draw.rect(screen, Colors.dark_gray, next_rect)
+    pygame.draw.rect(screen, Colors.dark_gray, grid_rect)
+    pygame.draw.rect(screen, Colors.dark_gray, controls_rect)
+    pygame.draw.rect(screen, Colors.dark_gray, level_rect)
 
+
+    pygame.draw.rect(screen, Colors.light_blue, grid_rect)
+    pygame.draw.rect(screen, Colors.light_blue, score_rect, 6, 0)
+    pygame.draw.rect(screen, Colors.light_blue,high_score , 6, 0)
+    pygame.draw.rect(screen, Colors.light_blue, controls_rect, 6, 0)
+    pygame.draw.rect(screen, Colors.light_blue, level_rect, 6, 0)
+    screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery +15) )
+    pygame.draw.rect(screen, Colors.light_blue, next_rect, 6, 0)
+    screen.blit(score_surface, (75, 13, 50, 50))
+    screen.blit(high_surface, (40, 105, 50, 50))
+    screen.blit(next_surface, (545, 13, 50, 50))
+    screen.blit(controls_surface, (60, 450, 50, 50))
+    screen.blit(level_surface, (570, 450, 50, 50))
+    if game.game_over == True:
+        screen.blit(game_over_surface, (530, 300, 50, 50))
+    game.draw(screen)
     pygame.display.update()
     clock.tick(60)
+
