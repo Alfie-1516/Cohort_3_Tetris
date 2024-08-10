@@ -1,4 +1,5 @@
 """This code sets up a Tetris game using Pygame, initializing necessary modules, fonts, and display elements."""
+
 import sys
 import pygame
 from Game_Class import Game
@@ -58,6 +59,7 @@ while True:
 
     # Drawing the pygame canvas
     score_value_surface = title_font.render(str(game.score), True, Colors.white)
+    high_score_value_surface = title_font.render(str(game.get_highest_score()), True, Colors.white)
     screen.fill(Colors.dark_blue)
 
     screen.blit(bg_image, (0, 0))
@@ -76,6 +78,8 @@ while True:
     pygame.draw.rect(screen, Colors.light_blue, level_rect, 6, 0)
     screen.blit(score_value_surface,
                 score_value_surface.get_rect(centerx=score_rect.centerx, centery=score_rect.centery + 15))
+    screen.blit(high_score_value_surface,
+                high_score_value_surface.get_rect(centerx=high_score.centerx, centery=high_score.centery + 15))
     pygame.draw.rect(screen, Colors.light_blue, next_rect, 6, 0)
     screen.blit(score_surface, (75, 13, 50, 50))
     screen.blit(high_surface, (40, 105, 50, 50))
@@ -84,6 +88,12 @@ while True:
     screen.blit(level_surface, (570, 450, 50, 50))
     if game.game_over == True:
         screen.blit(game_over_surface, (530, 300, 50, 50))
+        file = open("highscore.txt", "r")
+        content = file.read()
+        content = str(content)
+        if content < str(game.score):
+            file = open("highscore.txt", "w")
+            file.write(str(game.score))
         print(game.score)
     if game.pause == True:
         screen.blit(pause_surface, (530, 300, 50, 50))

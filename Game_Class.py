@@ -118,3 +118,8 @@ class Game:
             self.next_block.draw(screen, 445, 76)
         else:
             self.next_block.draw(screen, 460, 66)
+    def get_highest_score(self):
+        file = open("highscore.txt", "r")
+        content = file.read()
+        content = str(content)
+        return content
