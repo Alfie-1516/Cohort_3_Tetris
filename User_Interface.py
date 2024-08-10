@@ -10,11 +10,10 @@ title_font = pygame.font.Font(None, 30)
 score_surface = title_font.render("Score", True, Colors.white)
 high_surface = title_font.render("Highest Score", True, Colors.white)
 next_surface = title_font.render("Next Brick", True, Colors.white)
-controls_surface =  title_font.render("Controls", True, Colors.white)
-level_surface =  title_font.render("Level", True, Colors.white)
+controls_surface = title_font.render("Controls", True, Colors.white)
+level_surface = title_font.render("Level", True, Colors.white)
 game_over_surface = title_font.render("GAME OVER!!!", True, Colors.red)
-
-
+pause_surface = title_font.render("Paused!!!", True, Colors.white)
 
 score_rect = pygame.Rect(19, 5, 170, 80)
 high_score = pygame.Rect(19, 97, 170, 80)
@@ -22,7 +21,6 @@ next_rect = pygame.Rect(510, 5, 170, 180)
 grid_rect = pygame.Rect(192, 5, 315, 610)
 controls_rect = pygame.Rect(510, 435, 170, 180)
 level_rect = pygame.Rect(19, 435, 170, 180)
-
 
 screen = pygame.display.set_mode((700, 620))
 pygame.display.set_caption("Tetris Game")
@@ -35,7 +33,6 @@ bg_image = pygame.image.load("image-asset.png").convert()
 GAME_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(GAME_UPDATE, 300)
 
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -45,16 +42,18 @@ while True:
             if game.game_over == True:
                 game.game_over = False
                 game.reset()
-            if event.key == pygame.K_LEFT and game.game_over == False:
+            if event.key == pygame.K_LEFT and game.game_over == False and game.pause == False:
                 game.move_left()
-            if event.key == pygame.K_RIGHT and game.game_over == False:
+            if event.key == pygame.K_RIGHT and game.game_over == False and game.pause == False:
                 game.move_right()
-            if event.key == pygame.K_DOWN and game.game_over == False:
+            if event.key == pygame.K_DOWN and game.game_over == False and game.pause == False:
                 game.move_down()
                 game.update_score(0, 1)
-            if event.key == pygame.K_UP and game.game_over == False:
+            if event.key == pygame.K_UP and game.game_over == False and game.pause == False:
                 game.rotate()
-        if event.type == GAME_UPDATE and game.game_over == False:
+            if event.key == pygame.K_SPACE:
+                game.pause = not game.pause
+        if event.type == GAME_UPDATE and game.game_over == False and game.pause == False:
             game.move_down()
 
     # Drawing the pygame canvas
@@ -70,13 +69,13 @@ while True:
     pygame.draw.rect(screen, Colors.dark_gray, controls_rect)
     pygame.draw.rect(screen, Colors.dark_gray, level_rect)
 
-
     pygame.draw.rect(screen, Colors.light_blue, grid_rect)
     pygame.draw.rect(screen, Colors.light_blue, score_rect, 6, 0)
-    pygame.draw.rect(screen, Colors.light_blue,high_score , 6, 0)
+    pygame.draw.rect(screen, Colors.light_blue, high_score, 6, 0)
     pygame.draw.rect(screen, Colors.light_blue, controls_rect, 6, 0)
     pygame.draw.rect(screen, Colors.light_blue, level_rect, 6, 0)
-    screen.blit(score_value_surface, score_value_surface.get_rect(centerx = score_rect.centerx, centery = score_rect.centery +15) )
+    screen.blit(score_value_surface,
+                score_value_surface.get_rect(centerx=score_rect.centerx, centery=score_rect.centery + 15))
     pygame.draw.rect(screen, Colors.light_blue, next_rect, 6, 0)
     screen.blit(score_surface, (75, 13, 50, 50))
     screen.blit(high_surface, (40, 105, 50, 50))
@@ -85,7 +84,9 @@ while True:
     screen.blit(level_surface, (570, 450, 50, 50))
     if game.game_over == True:
         screen.blit(game_over_surface, (530, 300, 50, 50))
+        print(game.score)
+    if game.pause == True:
+        screen.blit(pause_surface, (530, 300, 50, 50))
     game.draw(screen)
     pygame.display.update()
     clock.tick(60)
-

@@ -13,6 +13,7 @@ class Game:
         self.current_block = self.get_random_block()
         self.next_block = self.get_random_block()
         self.game_over = False
+        self.pause =  False
         self.score = 0
         # Load sound effects
         self.rotate_sound = pygame.mixer.Sound("Sounds/rotate.ogg")
