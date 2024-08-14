@@ -57,6 +57,11 @@ while True:
                 game.rotate()
             if event.key == pygame.K_SPACE:
                 game.pause = not game.pause
+            if event.key == pygame.K_p:
+                if game.is_music_paused:
+                    game.play_music()
+                else:
+                    game.pause_music()
         if event.type == GAME_UPDATE and game.game_over == False and game.pause == False:
             game.move_down()
 

@@ -23,6 +23,20 @@ class Game:
         pygame.mixer.music.load("Sounds/music.ogg")
         pygame.mixer.music.play(-1)
 
+        self.is_music_paused = False  # Track the music's pause state
+
+    # Method to play or resume background music
+    def play_music(self):
+        if self.is_music_paused:
+            pygame.mixer.music.unpause()
+            self.is_music_paused = False  # Update the state to not paused
+
+    # Method to pause background music
+    def pause_music(self):
+        if not self.is_music_paused:
+            pygame.mixer.music.pause()
+            self.is_music_paused = True  # Update the state to paused
+
     # Update the game score based on lines cleared and move down points
     def update_score(self, lines_cleared, move_down_points):
         if lines_cleared == 1:
