@@ -20,8 +20,8 @@ score_rect = pygame.Rect(19, 5, 170, 80)
 high_score = pygame.Rect(19, 97, 170, 80)
 next_rect = pygame.Rect(510, 5, 170, 180)
 grid_rect = pygame.Rect(192, 5, 315, 610)
-controls_rect = pygame.Rect(510, 435, 170, 180)
-level_rect = pygame.Rect(19, 435, 170, 180)
+controls_rect = pygame.Rect(19, 435, 170, 180)
+level_rect = pygame.Rect(510, 435, 170, 180)
 
 screen = pygame.display.set_mode((700, 620))
 pygame.display.set_caption("Tetris Game")
@@ -30,6 +30,9 @@ clock = pygame.time.Clock()
 
 game = Game()
 bg_image = pygame.image.load("image-asset.png").convert()
+controls_img = pygame.image.load("controls.png").convert()
+controls_blitz_img = pygame.transform.scale(controls_img, (150, 160))
+
 
 GAME_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(GAME_UPDATE, 300)
@@ -64,6 +67,7 @@ while True:
 
     screen.blit(bg_image, (0, 0))
 
+
     pygame.draw.rect(screen, Colors.dark_gray, score_rect)
     pygame.draw.rect(screen, Colors.dark_gray, high_score)
     pygame.draw.rect(screen, Colors.dark_gray, next_rect)
@@ -81,6 +85,8 @@ while True:
     screen.blit(high_score_value_surface,
                 high_score_value_surface.get_rect(centerx=high_score.centerx, centery=high_score.centery + 15))
     pygame.draw.rect(screen, Colors.light_blue, next_rect, 6, 0)
+
+    screen.blit(controls_blitz_img, (29,445), )
     screen.blit(score_surface, (75, 13, 50, 50))
     screen.blit(high_surface, (40, 105, 50, 50))
     screen.blit(next_surface, (545, 13, 50, 50))
@@ -88,13 +94,16 @@ while True:
     screen.blit(level_surface, (570, 450, 50, 50))
     if game.game_over == True:
         screen.blit(game_over_surface, (530, 300, 50, 50))
-        file = open("highscore.txt", "r")
-        content = file.read()
-        content = str(content)
-        if content < str(game.score):
-            file = open("highscore.txt", "w")
-            file.write(str(game.score))
-        print(game.score)
+        # file = open("highscore.txt", "r")
+        with open("highscore.txt", "r") as file:
+            content = file.read()
+            content = int(content)
+            test_score = int(game.score)
+
+        if content < test_score:
+            with open("highscore.txt", "w") as file:
+                file.write(str(game.score))
+            print(game.score)
     if game.pause == True:
         screen.blit(pause_surface, (530, 300, 50, 50))
     game.draw(screen)
