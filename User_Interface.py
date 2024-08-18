@@ -8,6 +8,7 @@ from Colors_Class import Colors
 pygame.init()
 
 title_font = pygame.font.Font(None, 30)
+level_font = pygame.font.Font(None, 60)
 score_surface = title_font.render("Score", True, Colors.white)
 high_surface = title_font.render("Highest Score", True, Colors.white)
 next_surface = title_font.render("Next Brick", True, Colors.white)
@@ -35,10 +36,17 @@ controls_blitz_img = pygame.transform.scale(controls_img, (150, 160))
 
 
 GAME_UPDATE = pygame.USEREVENT
-pygame.time.set_timer(GAME_UPDATE, 300)
+game_speed = 310
+current_level = 0
+previous_level = 0
+level_incrementer = 10
+
+pygame.time.set_timer(GAME_UPDATE, game_speed)
 
 while True:
+    level = game.score//level_incrementer
     for event in pygame.event.get():
+
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
@@ -70,6 +78,13 @@ while True:
     high_score_value_surface = title_font.render(str(game.get_highest_score()), True, Colors.white)
     screen.fill(Colors.dark_blue)
 
+    game_level = level_font.render(str(level), True, Colors.white)
+    current_level =  level
+    if current_level > previous_level:
+        game_speed = 310 - (10 * (level))
+        previous_level = current_level
+        pygame.time.set_timer(GAME_UPDATE, game_speed)
+
     screen.blit(bg_image, (0, 0))
 
 
@@ -89,7 +104,10 @@ while True:
                 score_value_surface.get_rect(centerx=score_rect.centerx, centery=score_rect.centery + 15))
     screen.blit(high_score_value_surface,
                 high_score_value_surface.get_rect(centerx=high_score.centerx, centery=high_score.centery + 15))
+    screen.blit(game_level,game_level.get_rect(centerx = level_rect.centerx, centery=level_rect.centery +15) )
     pygame.draw.rect(screen, Colors.light_blue, next_rect, 6, 0)
+
+
 
     screen.blit(controls_blitz_img, (29,445), )
     screen.blit(score_surface, (75, 13, 50, 50))
@@ -108,9 +126,11 @@ while True:
         if content < test_score:
             with open("highscore.txt", "w") as file:
                 file.write(str(game.score))
-            print(game.score)
+
     if game.pause == True:
         screen.blit(pause_surface, (530, 300, 50, 50))
+
+
     game.draw(screen)
     pygame.display.update()
     clock.tick(60)

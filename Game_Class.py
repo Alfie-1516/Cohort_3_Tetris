@@ -15,6 +15,7 @@ class Game:
         self.game_over = False
         self.pause =  False
         self.score = 0
+        self.game_speed = 300
         # Load sound effects
         self.rotate_sound = pygame.mixer.Sound("Sounds/rotate.ogg")
         self.clear_sound = pygame.mixer.Sound("Sounds/clear.ogg")
@@ -137,3 +138,9 @@ class Game:
         content = file.read()
         content = str(content)
         return content
+    def get_game_level(self):
+        return self.level
+    # def get_game_speed(self):
+    #
+    #     updated_speed = 310 - (10 * self.level)
+    #     return updated_speed
